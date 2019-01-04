@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 
 export default class RecursiveComponent extends Component {
-  // write recursive method here
-  recursive = n => {
-    const Comp = this.props.components[n];
-    console.log(n);
-    if (n <= 0) {
-      return <Comp />;
-    } else {
-      return <Comp>{this.recursive(n - 1)}</Comp>;
-    }
+  createComponent = (array, index) => {
+    let Component = array[index];
+    if (index === array.length - 1) return <Component />;
+    return (
+      <Component>{this.createComponent(array, index + 1)}</Component>
+    );
   };
 
   render() {
     return (
-      <div>
-        {/* invoke recursive method here */}
-        {this.recursive(this.props.components.length - 1)}
-      </div>
+      <div>{this.createComponent(this.props.components, 0)}</div>
     );
   }
 }
